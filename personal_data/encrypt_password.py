@@ -27,7 +27,7 @@ def is_valid(hashed_password: bytes, password: str) -> bool:
         password (str): The password to check.
 
     Returns:
-        bool: True if the password matches the hashed password, 
+        bool: True if the password matches the hashed password,
         False otherwise.
 
     """
