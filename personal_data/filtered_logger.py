@@ -4,9 +4,8 @@ import logging
 import re
 from typing import List
 
-
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class """
+    """Redacting Formatter class"""
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -24,9 +23,3 @@ class RedactingFormatter(logging.Formatter):
     def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
         pattern = fr'({"|".join(map(re.escape, fields))})=[^{re.escape(separator)}]+(?={re.escape(separator)}|\Z)'
         return re.sub(pattern, fr'\1={redaction}', message)
-
-
-message = "name=Bob;email=bob@dylan.com;ssn=000-123-0000;password=bobby2019;"
-log_record = logging.LogRecord("my_logger", logging.INFO, None, None, message, None, None)
-formatter = RedactingFormatter(fields=["email", "ssn", "password"])
-print(formatter.format(log_record))
