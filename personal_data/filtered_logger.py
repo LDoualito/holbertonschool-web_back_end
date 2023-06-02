@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+filtered_logger module
+
+This module provides a function to obfuscate specified fields in a log message.
+"""
+
 import re
 from typing import List
 
