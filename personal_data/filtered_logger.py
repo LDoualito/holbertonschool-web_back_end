@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import logging
-from typing import List
+from typing import Tuple
 
-PII_FIELDS: List[str] = ['name', 'email', 'phone', 'ssn', 'password']
+PII_FIELDS: Tuple[str, ...] = ('name', 'email', 'phone', 'ssn', 'password')
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class """
 
-    def __init__(self, fields: List[str]):
+    def __init__(self, fields: Tuple[str, ...]):
         super().__init__("[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s")
         self.fields = list(fields)
 
@@ -16,7 +16,7 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, '***', super().format(record), ';')
 
 
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: Tuple[str, ...], redaction: str, message: str, separator: str) -> str:
     """ Returns the log message obfuscated """
 
     for field in fields:
