@@ -3,11 +3,13 @@
 """
 filtered_logger module
 
-This module provides functions and classes related to logging and database connections.
+This module provides functions and classes related
+ to logging and database connections.
 """
 import logging
 import os
 import mysql.connector
+
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Returns a connector to the database """
