@@ -1,34 +1,16 @@
 #!/usr/bin/env python3
+""" Module for encrypting """
 import bcrypt
 
 
 def hash_password(password: str) -> bytes:
-    """
-    Hashes a password using bcrypt.
-
-    Args:
-        password (str): The password to hash.
-
-    Returns:
-        bytes: The salted and hashed password as a byte string.
-
-    """
-    salt = bcrypt.gensalt()
-    hashed_password = bcrypt.hashpw(password.encode(), salt)
-    return hashed_password
+    """ Hash a password """
+    password = password.encode('utf-8')
+    return bcrypt.hashpw(password, bcrypt.gensalt())
 
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
-    """
-    Validates if a password matches a hashed password using bcrypt.
-
-    Args:
-        hashed_password (bytes): The hashed password as a byte string.
-        password (str): The password to check.
-
-    Returns:
-        bool: True if the password matches the hashed password,
-        False otherwise.
-
-    """
-    return bcrypt.checkpw(password.encode(), hashed_password)
+    """ Check if the hash password correspond to the password """
+    if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
+        return True
+    return False
