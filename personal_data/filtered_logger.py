@@ -32,7 +32,8 @@ def filter_datum(fields: Tuple[str, ...], redaction: str, message: str, separato
     Obfuscate specified fields in the log message.
     """
     for field in fields:
-        message = re.sub(fr'(?<=^|{re.escape(separator)})({"|".join(map(re.escape, [field]))})=[^{re.escape(separator)}]*', fr'\1={redaction}', message)
+        pattern = fr'(?<=^|{re.escape(separator)})({"|".join(map(re.escape, [field]))})=[^{re.escape(separator)}]*'
+        message = re.sub(pattern, fr'\1={redaction}', message)
     return message
 
 
