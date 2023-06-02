@@ -1,32 +1,45 @@
 #!/usr/bin/env python3
 
+"""
+filtered_logger module
+"""
+
 import logging
+import re
 from typing import Tuple
 
 PII_FIELDS: Tuple[str, ...] = ('name', 'email', 'phone', 'ssn', 'password')
 
+
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class """
+    """
+    Redacting Formatter class
+    """
 
     def __init__(self, fields: Tuple[str, ...]):
         super().__init__("[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s")
         self.fields = list(fields)
 
     def format(self, record: logging.LogRecord) -> str:
+        """
+        Format the log record, obfuscating sensitive information in specified fields.
+        """
         return filter_datum(self.fields, '***', super().format(record), ';')
 
 
 def filter_datum(fields: Tuple[str, ...], redaction: str, message: str, separator: str) -> str:
-    """ Returns the log message obfuscated """
-
+    """
+    Obfuscate specified fields in the log message.
+    """
     for field in fields:
         message = re.sub(fr'(?<=^|{re.escape(separator)})({"|".join(map(re.escape, [field]))})=[^{re.escape(separator)}]*', fr'\1={redaction}', message)
     return message
 
 
 def get_logger() -> logging.Logger:
-    """ Returns a Logger object named "user_data" """
-
+    """
+    Get a Logger object named "user_data".
+    """
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
