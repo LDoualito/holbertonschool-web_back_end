@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+filtered_logger module
+
+This module provides functions and classes related to logging and database connections.
+"""
+
 import os
 import mysql.connector
 from mysql.connector.connection import MySQLConnection
