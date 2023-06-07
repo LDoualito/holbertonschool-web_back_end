@@ -9,16 +9,7 @@ import uuid
 
 
 def _hash_password(password: str) -> bytes:
-    """
-    Return the salted hash of the input password.
-
-    Args:
-        password: The password to be hashed.
-
-    Returns:
-        The salted hash of the input password as bytes.
-    """
-
+    """ return salted hash of the input password """
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
 
