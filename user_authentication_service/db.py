@@ -24,7 +24,7 @@ class DB:
         # Create a SQLAlchemy engine for database connection
         self._engine = create_engine("sqlite:///a.db")
 
-        # Drop all existing tables and create new ones based on the defined models
+        # Drop all existing tables and create new ones
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
 
@@ -88,7 +88,7 @@ class DB:
         try:
             session = self._session
 
-            # Perform a query on the User model and filter the results based on the provided criteria
+            # Perform a query on the User model and filter
             user = session.query(User).filter_by(**kwargs).first()
 
             if user is None:
