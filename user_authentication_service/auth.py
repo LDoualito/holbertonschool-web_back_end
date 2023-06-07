@@ -62,14 +62,12 @@ class Auth:
             return user
 
     def valid_login(self, email: str, password: str) -> bool:
-    """ Check if the login is valid """
+        """ Check if the login is valid """
     try:
         user = self._db.find_user_by(email=email)
-        return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+           return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
     except Exception:
-        return False
-
-
+     return False
     def create_session(self, email: str) -> str:
         """
         Create a session for the user and return the session id.
