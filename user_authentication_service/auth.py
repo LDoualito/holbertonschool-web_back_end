@@ -86,8 +86,8 @@ class Auth:
             # Find the user with the provided email
             user = self._db.find_user_by(email=email)
 
-            # Check if the provided password matches the hashed password of the user
-            return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+            # Check if the provided password matches user hashed password 
+return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
 
         except Exception:
             return False
@@ -129,7 +129,7 @@ class Auth:
             session_id: The session id of the user.
 
         Returns:
-            The User object associated with the session id, or None if not found.
+            The User object associated with the session id
         """
 
         if session_id is None:
@@ -142,5 +142,3 @@ class Auth:
 
         except NoResultFound:
             return None
-
-   
