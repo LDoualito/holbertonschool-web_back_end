@@ -9,6 +9,7 @@ from sqlalchemy import Column, Integer, String
 # Create a base class for declarative models
 Base = declarative_base()
 
+
 # Define a class representing the User model
 class User(Base):
     """
