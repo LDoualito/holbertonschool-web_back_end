@@ -36,8 +36,11 @@ class Auth:
         """ Check if the login credentials are valid """
         try:
             user = self._db.find_user_by(email=email)
-            return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
-        except Exception:
+            return bcrypt.checkpw(
+    password.encode('utf-8'),
+    user.hashed_password
+)
+            except Exception:
             return False
 
     def create_session(self, email: str) -> str:
@@ -82,6 +85,10 @@ class Auth:
         try:
             user = self._db.find_user_by(reset_token=reset_token)
             hashed_password = _hash_password(password)
-            self._db.update_user(user.id, hashed_password=hashed_password, reset_token=None)
+            self._db.update_user(
+    user.id,
+    hashed_password=hashed_password,
+    reset_token=None
+)
         except NoResultFound:
             raise ValueError
