@@ -1,0 +1,2 @@
+-- CREATE AN INDEX ON THE FIRST LETTER OF NAME AND SCORE IN TABLE NAMES 
+CREATE INDEX idx_name_first_score ON names(name(1), score);
