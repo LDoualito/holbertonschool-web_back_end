@@ -23,4 +23,3 @@ if __name__ == "__main__":
     print(f"\tmethod DELETE: {delete}")
     print(f"{status} status check")
     client.close()
-    
