@@ -10,57 +10,53 @@ import os
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 
-# Create a Flask application
 app = Flask(__name__)
-# Register the blueprint for API routes
 app.register_blueprint(app_views)
-# Enable Cross-Origin Resource Sharing (CORS) for API routes
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-
-# Initialize authentication mechanism based on environment variable
 auth = None
+
 if os.getenv('AUTH_TYPE') == 'basic_auth':
     auth = BasicAuth()
 else:
     auth = Auth()
 
-# Define error handlers for specific HTTP status codes
+
 @app.errorhandler(404)
 def not_found(error) -> str:
-    """ Not found handler """
+    """ Not found handler
+    """
     return jsonify({"error": "Not found"}), 404
+
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """ Unauthorized handler """
     return jsonify({"error": "Unauthorized"}), 401
 
+
 @app.errorhandler(403)
 def forbidden(error) -> str:
     """ Forbidden handler """
     return jsonify({"error": "Forbidden"}), 403
 
-# Execute this function before processing each request
+
 @app.before_request
 def before_request():
     """ Execute before request """
-    # List of paths that do not require authentication
     paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
 
-    # Check if authentication is required for the requested path
-    if auth is None or not auth.require_auth(request.path, paths):
+    if auth is None:
         return
-
-    # Check for valid authorization header
+    if not auth.require_auth(request.path, paths):
+        return
     if auth.authorization_header(request) is None:
         abort(401)
-
-    # Check for a valid current user
     if auth.current_user(request) is None:
         abort(403)
 
-# Start the application if run as the main module
+
 if __name__ == "__main__":
+    """ Main entry point of the application """
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
     app.run(host=host, port=port)
