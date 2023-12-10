@@ -3,6 +3,9 @@
 """
 from flask import jsonify, abort
 from api.v1.views import app_views
+from flask import abort, Blueprint
+
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
@@ -12,6 +15,11 @@ def status() -> str:
       - the status of the API
     """
     return jsonify({"status": "OK"})
+
+@app_views.route('/unauthorized', methods=['GET'])
+def unauthorized_endpoint():
+    """Endpoint that raises a 401 error."""
+    abort(401)
 
 
 @app_views.route('/stats/', strict_slashes=False)

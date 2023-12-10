@@ -7,7 +7,10 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+from flask import Flask, jsonify
+from api.v1.views import app_views
 
+app = Flask(__name__)
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -25,3 +28,15 @@ if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
     app.run(host=host, port=port)
+
+@app.errorhandler(401)
+def unauthorized(error):
+    """Handle 401 Unauthorized errors."""
+    response = jsonify({"error": "Unauthorized"})
+    response.status_code = 401
+    return response
+
+if __name__ == "__main__":
+    app.run(host=os.getenv("API_HOST", "0.0.0.0"),
+            port=os.getenv("API_PORT", 5000),
+            threaded=True)
