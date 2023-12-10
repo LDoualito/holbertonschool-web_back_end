@@ -1,0 +1,6 @@
+Flask-Cors==3.0.10
+Jinja2==3.0
+requests==2.18.4
+pycodestyle==2.6.0
+markupsafe>=1.1.1
+Flask>=0.9
